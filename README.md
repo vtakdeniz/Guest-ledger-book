@@ -1,5 +1,7 @@
 # guest-ledger-book
 
+Application consists 2 input fields. One of them is for email and the other is for the content of the message. Once user clicks on the add button, message will be added both to the local storage of the browser and to the main screen. Hence, messages won't dissapear after a page refresh.
+
 ## Build Setup
 
 ```bash

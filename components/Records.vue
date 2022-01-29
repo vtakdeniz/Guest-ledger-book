@@ -3,6 +3,7 @@
       <div :key="i" v-for="(message,i) in this.messages" >
           <Record :message="message"/>
       </div>
+      <button @click="clearAllMessages" class="m-10 bg-red-600 p-2 rounded text-white font-bold">Clear all messages</button>
   </div>    
 </template>
 
@@ -35,6 +36,11 @@ export default {
         clearAllRecords(){
             this.messages=[]
             localStorage.removeItem('messages')
+        },
+        clearAllMessages(){
+            this.messages=[]
+            let parsed = JSON.stringify(this.messages);
+            localStorage.setItem('messages', parsed);
         }
     }
 }

@@ -4,6 +4,7 @@
       <div class="main-content lg:w-9/12 lg:ml-72 ">
         <Form/>
         <Records/>
+        
       </div>
   </div>
 </template>
