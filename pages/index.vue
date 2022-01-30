@@ -2,8 +2,8 @@
   <div class="container w-screen ">
       <Header/>
       <div class="main-content lg:w-9/12 lg:ml-72 ">
-        <Form/>
-        <Records/>
+        <Form @addItem="addItem"/>
+        <Records @clearAllRecords="clearAllRecords" :messages="messages"/>
         
       </div>
   </div>
@@ -20,9 +20,29 @@ export default {
     Records
   },
   name: 'IndexPage',
+  data(){
+    return{
+       messages:[]
+    }
+  },
   methods:{
-
-  }
+    clearAllRecords(){
+        this.messages=[]
+        let parsed = JSON.stringify(this.messages);
+        localStorage.setItem('messages', parsed);
+    },
+    addItem(data){
+        this.messages.push(data);
+        let parsed = JSON.stringify(this.messages);
+        localStorage.setItem('messages', parsed);
+    }
+  },
+  mounted(){
+      if(localStorage.getItem('messages')){
+          this.messages = JSON.parse(localStorage.getItem('messages'));
+      }
+  },
+  
 }
 </script>
 

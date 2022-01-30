@@ -37,7 +37,8 @@ export default {
     },
     methods:{
         addMessage(){
-            this.$nuxt.$emit('add-item', {email:this.email,content:this.message})
+            this.$emit('addItem',{email:this.email,content:this.message});
+            //this.$nuxt.$emit('add-item', {email:this.email,content:this.message})
         }
     }
 }
