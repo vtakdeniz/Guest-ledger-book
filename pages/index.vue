@@ -26,21 +26,34 @@ export default {
     }
   },
   methods:{
-    clearAllRecords(){
+    async clearAllRecords(){
         this.messages=[]
-        let parsed = JSON.stringify(this.messages);
-        localStorage.setItem('messages', parsed);
+        let res=await fetch("http://127.0.0.1:9000/api/comments",{method:'DELETE'})
+        if(!res.ok){
+            alert('An error occured!!')
+        }
+        /*let parsed = JSON.stringify(this.messages);
+        localStorage.setItem('messages', parsed);*/
     },
-    addItem(data){
-        this.messages.push(data);
-        let parsed = JSON.stringify(this.messages);
-        localStorage.setItem('messages', parsed);
+    async addItem(data){
+        let str=JSON.stringify(data)
+        console.log(str)
+        let res=await fetch("http://127.0.0.1:9000/api/comment",{method:'POST',body:str,headers: {'Content-Type': 'application/json',},})
+        if(res.ok){
+            this.messages.push(data);
+            return
+        }
+        alert('An error occured!!')
+        /*let parsed = JSON.stringify(this.messages);
+        localStorage.setItem('messages', parsed);*/
     }
   },
-  mounted(){
-      if(localStorage.getItem('messages')){
+  async mounted(){
+      /*if(localStorage.getItem('messages')){
           this.messages = JSON.parse(localStorage.getItem('messages'));
-      }
+      }*/
+      let comments=await fetch("http://127.0.0.1:9000/api/comments").then(r=>r.json())
+      this.messages=comments
   },
   
 }
