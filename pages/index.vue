@@ -13,6 +13,7 @@
 import Header from '../components/Header.vue'
 import Form from '../components/Form.vue'
 import Records from '~/components/Records.vue'
+import axios from 'axios';
 export default {
   components: {
     Header,
@@ -25,25 +26,40 @@ export default {
        messages:[]
     }
   },
+  created(){
+    this.messages=[]
+  },
   methods:{
     async clearAllRecords(){
         this.messages=[]
-        let res=await fetch("http://127.0.0.1:9000/api/comments",{method:'DELETE'})
-        if(!res.ok){
-            alert('An error occured!!')
-        }
+        let res=await axios.delete("http://127.0.0.1:9000/comments").then(
+          response=>{
+                  if(response.statusText=='OK'){
+                      this.messages=[];
+                      return
+                  }
+                  alert('An error occured!!')
+            }
+        )
+        //await fetch("http://127.0.0.1:9000/comments",{method:'DELETE'})
         /*let parsed = JSON.stringify(this.messages);
         localStorage.setItem('messages', parsed);*/
     },
     async addItem(data){
-        let str=JSON.stringify(data)
-        console.log(str)
-        let res=await fetch("http://127.0.0.1:9000/api/comment",{method:'POST',body:str,headers: {'Content-Type': 'application/json',},})
-        if(res.ok){
-            this.messages.push(data);
-            return
+        if (!this.messages){
+          this.messages=[]
         }
-        alert('An error occured!!')
+        let str=JSON.stringify(data)
+        let res= await axios.post("http://127.0.0.1:9000/comments",str,{headers: {'Content-Type': 'application/json',}}).then(
+          response=>{
+                  if(response.statusText=='OK'){
+                      this.messages.push(data);
+                      return
+                  }
+                  alert('An error occured!!')
+            }
+        )
+        //await fetch("http://127.0.0.1:9000/comments",{method:'POST',body:str,headers: {'Content-Type': 'application/json',},})
         /*let parsed = JSON.stringify(this.messages);
         localStorage.setItem('messages', parsed);*/
     }
@@ -52,7 +68,8 @@ export default {
       /*if(localStorage.getItem('messages')){
           this.messages = JSON.parse(localStorage.getItem('messages'));
       }*/
-      let comments=await fetch("http://127.0.0.1:9000/api/comments").then(r=>r.json())
+      let comments= await axios.get("http://127.0.0.1:9000/comments").then(r=>r.data)
+      //await fetch("http://127.0.0.1:9000/comments").then(r=>r.json())
       this.messages=comments
   },
   

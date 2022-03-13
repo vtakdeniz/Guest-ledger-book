@@ -7,11 +7,16 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "test": "jest"
+    "test": "jest",
+    "pact:publish": "pact-broker publish pact/pacts --consumer-app-version=1 --broker-base-url=https://mediterranean.pactflow.io --broker-token=C05m5gQduXO-0fFGPYN6mw"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "@pact-foundation/pact": "^9.17.2",
+    "axios": "^0.26.1",
     "core-js": "^3.19.3",
+    "expect.js": "^0.3.1",
+    "jest-pact": "^0.9.1",
     "nuxt": "^2.15.8",
     "vue": "^2.6.14",
     "vue-server-renderer": "^2.6.14",
