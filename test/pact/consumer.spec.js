@@ -6,25 +6,22 @@ const { Matchers } = require("@pact-foundation/pact")
 
 
 pactWith(
-  { consumer: "ShoppingCartClient", provider: "ShoppingCartApi" },
+  { consumer: "guestLedgerBookClient", provider: "guestLedgerBookApi" },
   provider => {
 
     describe("get comments", () => {
       const COMMENT_DATA = [
         {
             email:"test@example.com",
-            comment:"test"
+            content:"test"
         },
       ]
 
       const commentSuccessResponse = {
         status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: Matchers.eachLike({
           email:"test@example.com",
-          comment:"test"
+          content:"test"
       }),
       }
 
@@ -59,10 +56,7 @@ pactWith(
     describe("delete comments", () => {
 
       const commentSuccessResponse = {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        status: 200
       }
 
       const commentDeleteRequest = {
@@ -95,7 +89,7 @@ pactWith(
       const COMMENT_DATA =
         {
             email:"test@example.com",
-            comment:"test"
+            content:"test"
         }
 
       const commentSuccessResponse = {
