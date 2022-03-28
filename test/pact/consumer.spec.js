@@ -1,5 +1,5 @@
 
-import {fetchAllComments,postComment,deleteAllComments} from '../Api'
+import {fetchAllComments,postComment,deleteAllComments} from '../../Api'
 const { pactWith } = require("jest-pact")
 const { Matchers } = require("@pact-foundation/pact")
 

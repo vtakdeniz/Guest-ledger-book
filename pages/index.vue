@@ -14,6 +14,7 @@ import Header from '../components/Header.vue'
 import Form from '../components/Form.vue'
 import Records from '~/components/Records.vue'
 import axios from 'axios';
+import {fetchAllComments,postComment,deleteAllComments} from '../Api'
 export default {
   components: {
     Header,
@@ -32,45 +33,20 @@ export default {
   methods:{
     async clearAllRecords(){
         this.messages=[]
-        let res=await axios.delete("http://127.0.0.1:9000/comments").then(
-          response=>{
-                  if(response.statusText=='OK'){
-                      this.messages=[];
-                      return
-                  }
-                  alert('An error occured!!')
-            }
-        )
-        //await fetch("http://127.0.0.1:9000/comments",{method:'DELETE'})
-        /*let parsed = JSON.stringify(this.messages);
-        localStorage.setItem('messages', parsed);*/
+        let res=await deleteAllComments()
     },
     async addItem(data){
         if (!this.messages){
           this.messages=[]
         }
-        let str=JSON.stringify(data)
-        let res= await axios.post("http://127.0.0.1:9000/comments",str,{headers: {'Content-Type': 'application/json',}}).then(
-          response=>{
-                  if(response.statusText=='OK'){
-                      this.messages.push(data);
-                      return
-                  }
-                  alert('An error occured!!')
-            }
-        )
-        //await fetch("http://127.0.0.1:9000/comments",{method:'POST',body:str,headers: {'Content-Type': 'application/json',},})
-        /*let parsed = JSON.stringify(this.messages);
-        localStorage.setItem('messages', parsed);*/
+        
+        let res= await postComment(data)
+        this.messages.push(data)
     }
   },
   async mounted(){
-      /*if(localStorage.getItem('messages')){
-          this.messages = JSON.parse(localStorage.getItem('messages'));
-      }*/
-      let comments= await axios.get("http://127.0.0.1:9000/comments").then(r=>r.data)
-      //await fetch("http://127.0.0.1:9000/comments").then(r=>r.json())
-      this.messages=comments
+     let comments= await fetchAllComments()
+     this.messages=comments
   },
   
 }

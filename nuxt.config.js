@@ -1,4 +1,6 @@
+
 export default {
+  env: {API: process.env.API},
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'guest-ledger-book',
