@@ -40,7 +40,7 @@ export default {
           this.messages=[]
         }
         
-        let res= await postComment(data)
+        let res= await postComment(data,undefined)
         this.messages.push(data)
     }
   },

@@ -119,7 +119,7 @@ pactWith(
       
       // add expectations
       it("returns a successful body", () => {
-        return postComment(provider.mockService.baseUrl,COMMENT_DATA).then(comm => {
+        return postComment(COMMENT_DATA,provider.mockService.baseUrl).then(comm => {
           expect(comm).toEqual("")
         })
       })
